@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FORM</title>
+  <style>
+    /* Basic styling for the form */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Web Form Example</h2>
+  <form id="myForm">
+    <!-- Text Input -->
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <div class="error" id="nameError"></div>
+
+    <!-- Password Input -->
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <div class="error" id="passwordError"></div>
+
+    <!-- Checkbox -->
+    <label>Interests:</label>
+    <input type="checkbox" name="interests" value="reading">Reading
+    <input type="checkbox" name="interests" value="traveling">Traveling
+    <input type="checkbox" name="interests" value="sports">Sports
+    <div class="error" id="interestsError"></div>
+
+    <!-- Radio Buttons -->
+    <label>Gender:</label>
+    <input type="radio" name="gender" value="male" required>Male
+    <input type="radio" name="gender" value="female" required>Female
+    <div class="error" id="genderError"></div>
+
+    <!-- Dropdown -->
+    <label for="country">Country:</label>
+    <select id="country" name="country" required>
+      <option value="">Select a country</option>
+      <option value="usa">USA</option>
+      <option value="canada">Canada</option>
+      <option value="uk">UK</option>
+    </select>
+    <div class="error" id="countryError"></div>
+
+    <!-- Submit Button -->
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const password = document.getElementById("password").value;
+      const interests = document.querySelectorAll('input[name="interests"]:checked').length;
+      const gender = document.querySelector('input[name="gender"]:checked');
+      const country = document.getElementById("country").value;
+
+      // Reset error messages
+      const errorElements = document.querySelectorAll(".error");
+      errorElements.forEach(element => element.innerHTML = "");
+
+      // Validation rules
+      if (name === "") {
+        document.getElementById("nameError").innerHTML = "Name is required.";
+      }
+
+      if (password === "") {
+        document.getElementById("passwordError").innerHTML = "Password is required.";
+      }
+
+      if (interests === 0) {
+        document.getElementById("interestsError").innerHTML = "Select at least one interest.";
+      }
+
+      if (!gender) {
+        document.getElementById("genderError").innerHTML = "Gender is required.";
+      }
+
+      if (country === "") {
+        document.getElementById("countryError").innerHTML = "Please select a country.";
+      }
+
+      // If all validation rules pass, form can be submitted
+      if (name !== "" && password !== "" && interests > 0 && gender && country !== "") {
+        alert("Form submitted successfully!");
+        // Add your form submission logic here
+        // For example: document.getElementById("myForm").submit();
+      }
+    });
+  </script>
+</body>
+</html>
